@@ -1,0 +1,26 @@
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<!-- Button to trigger audio -->
+<p><button id="playButton">Play Audio</button><!-- Audio element -->
+<audio id="audio" src="Click4.wav"> </audio>
+<script>
+
+        // Get the button and audio element
+
+        const playButton = document.getElementById('playButton');
+
+        const audio = document.getElementById('audio');
+
+
+
+        // Event listener for the button click
+
+        playButton.addEventListener('click', function() {
+
+            // Play the audio
+
+            audio.play();
+
+        });
+
+    </script></p>
