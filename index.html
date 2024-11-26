@@ -3,70 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Загрузка файла с URL</title>
-    <style>
-        .button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
-        .button:hover {
-            background-color: #45a049;
-        }
-        #status {
-            margin-top: 10px;
-            font-size: 18px;
-        }
-    </style>
+    <title>Audio Player</title>
 </head>
 <body>
-    <h2>Загрузить файл с URL</h2>
-
-    <!-- Кнопка для скачивания -->
-    <button class="button" id="downloadBtn">Загрузить файл</button>
-    <div id="status"></div>
+    <h1>Слушайте историю</h1>
+    <button id="playButton">Play</button>
+    <audio id="audioPlayer" preload="none" style="display:none;">
+        <source src="story.mp3" type="audio/mp3">
+        Ваш браузер не поддерживает аудио.
+    </audio>
 
     <script>
-        document.getElementById('downloadBtn').addEventListener('click', function() {
-            // Показываем статус загрузки
-            document.getElementById('status').innerText = 'Загрузка началась...';
-
-            // URL файла, который нужно скачать
-            const fileUrl = 'http://codeskulptor-demos.commondatastorage.googleapis.com/GalaxyInvaders/bonus.wav'; // Замените на реальный URL
-
-            // Функция для скачивания файла с URL
-            downloadFile(fileUrl).then(() => {
-                document.getElementById('status').innerText = 'Загрузка завершена!';
-            }).catch((error) => {
-                document.getElementById('status').innerText = 'Ошибка загрузки!';
-                console.error('Ошибка при загрузке:', error);
-            });
+        document.getElementById('playButton').addEventListener('click', function() {
+            var audioPlayer = document.getElementById('audioPlayer');
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                this.innerText = 'Pause'; // Меняем текст кнопки на Pause
+            } else {
+                audioPlayer.pause();
+                this.innerText = 'Play'; // Меняем текст кнопки на Play
+            }
         });
-
-        // Функция для скачивания файла
-        function downloadFile(url) {
-            return fetch(url)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Ошибка сети');
-                    }
-                    return response.blob(); // Преобразуем файл в Blob
-                })
-                .then(blob => {
-                    // Создаем ссылку для скачивания
-                    const link = document.createElement('a');
-                    link.href = URL.createObjectURL(blob);
-                    link.download = 'musicfile.mp3'; // Имя файла при скачивании
-                    link.click(); // Имитируем клик для скачивания
-                })
-                .catch(error => {
-                    throw new Error('Ошибка при загрузке файла: ' + error.message);
-                });
-        }
     </script>
 </body>
 </html>
