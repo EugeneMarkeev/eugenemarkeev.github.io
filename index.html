@@ -1,28 +1,50 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Audio Player</title>
 </head>
 <body>
-    <h1>Слушайте историю</h1>
-    <button id="playButton">Play</button>
-    <audio id="audioPlayer" preload="none" style="display:none;">
-        <source src="story.mp3" type="audio/mp3">
-        Ваш браузер не поддерживает аудио.
+    <h1>Listen to Stories</h1>
+
+    <!-- Buttons for different audio files -->
+    <button class="playButton" data-audio="story1.mp3">Play Story 1</button>
+    <button class="playButton" data-audio="story2.mp3">Play Story 2</button>
+    <button class="playButton" data-audio="story3.mp3">Play Story 3</button>
+    <button class="playButton" data-audio="story4.mp3">Play Story 4</button>
+    <button class="playButton" data-audio="story5.wav">Play Story 5</button>
+
+    <!-- Hidden audio player -->
+    <audio class="audioPlayer" preload="none" style="display:none;">
+        Your browser does not support audio.
     </audio>
 
     <script>
-        document.getElementById('playButton').addEventListener('click', function() {
-            var audioPlayer = document.getElementById('audioPlayer');
-            if (audioPlayer.paused) {
-                audioPlayer.play();
-                this.innerText = 'Pause'; // Меняем текст кнопки на Pause
-            } else {
-                audioPlayer.pause();
-                this.innerText = 'Play'; // Меняем текст кнопки на Play
-            }
+        // Find all buttons
+        var buttons = document.querySelectorAll('.playButton');
+
+        // Add event listener for each button
+        buttons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var audioFile = button.getAttribute('data-audio'); // Get the audio file name
+                var audioPlayer = document.querySelector('.audioPlayer');
+                
+                // If the selected audio file is different from the current one, change the source
+                if (audioPlayer.src !== audioFile) {
+                    audioPlayer.src = audioFile; // Set the new audio file source
+                    audioPlayer.load(); // Load the new audio file
+                }
+
+                // Play or pause the audio
+                if (audioPlayer.paused) {
+                    audioPlayer.play();
+                    button.innerText = 'Pause'; // Change button text to "Pause"
+                } else {
+                    audioPlayer.pause();
+                    button.innerText = 'Play'; // Change button text to "Play"
+                }
+            });
         });
     </script>
 </body>
